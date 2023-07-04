@@ -4,15 +4,17 @@ const express_1 = require("express");
 const router = (0, express_1.Router)();
 let todo_array = [];
 router.post('/add-todo', (req, res, next) => {
+    const body = req.body;
     const todo_obj = {
         id: new Date().toISOString(),
-        text: req.body.text
+        text: body.text
     };
     todo_array.push(todo_obj);
     res.json(todo_array);
 });
 router.delete('/delete-todo', (req, res, next) => {
-    const id = req.body.id;
+    const body = req.body;
+    const id = body.id;
     let length = todo_array.length;
     for (let i = 0; i < length; i++) {
         if (todo_array[i].id === id) {
@@ -26,7 +28,8 @@ router.delete('/delete-todo', (req, res, next) => {
     res.status(201).json({ status: "success" });
 });
 router.put('/edit-todo', (req, res, next) => {
-    const id = req.body.id;
+    const body = req.body;
+    const id = body.id;
     let index = todo_array.findIndex((item) => item.id === id);
     if (index >= 0) {
         todo_array[index].text = req.body.text;
